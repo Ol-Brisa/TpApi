@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LibroServiceImpl extends BaseServiceImpl<Libro, Long> implements LibroService {
-    @Autowired
+    @Autowired(required = true)
     private LibroRepository libroRepositoryRepository;
     public  LibroServiceImpl(BaseRepository<Libro, Long> baseRepository, LibroRepository libroRepository ) {
-        super((baseRepository));;
+        super((baseRepository));
         this.libroRepositoryRepository = libroRepository;
     }
 

@@ -1,54 +1,24 @@
 package com.example.demo.Entidades;
 
-import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.mapping.Set;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.HashSet;
-
-@EqualsAndHashCode(callSuper = true)
 @Entity
-@Data
-@NoArgsConstructor
+@Table(name = "Autor")
+@Getter
+@Setter
 @AllArgsConstructor
-@Builder
-@Table(name = "autor")
-public class Autor extends Base {
+@NoArgsConstructor
+public class Autor extends Base{
+    @Column(name = "nombre")
     private String nombre;
+    @Column(name = "apellido")
     private String apellido;
+    @Column(name = "biografia", length = 1500)
     private String biografia;
-
-    @ManyToMany(cascade =
-            {CascadeType.PERSIST,
-                    CascadeType.MERGE})
-    @JoinTable(
-            name = "libro_autor",
-            joinColumns = @JoinColumn(name = "libro_id"),
-            inverseJoinColumns = @JoinColumn(name = "autor_id")
-    )
-
-    // Se puede producir ERRORES DE RECURSIVIDAD POR ESO EN LOMBOCK HAY QUE
-    // eXCLUIR LOS MÉTODOS  Equals y HashCode
-    @EqualsAndHashCode.Exclude
-    // OJO ES IMPORTANTE COLOCAR ESTA ANOTACIÓN SINO ME DA ERROR
-    @Builder.Default
-    private java.util.Set<Libro> libros = new HashSet<>();
-
-
-    public void agregarLibro(Libro Lib) {
-
-        libros.add(Lib);
-    }
-
-    public void mostrarLibros() {
-        System.out.println("Libros de " + nombre + " " + apellido + ":");
-        for (Libro libro : libros) {
-            System.out.println("Título: " + libro.getTitulo());
-            System.out.println("Autor: " + libro.getAutor());
-            System.out.println("Género: " + libro.getGenero());
-            System.out.println("Fecha: " + libro.getFecha());
-            System.out.println("Páginas: " + libro.getPaginas());
-        }
-
-    }
 }

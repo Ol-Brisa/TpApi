@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 public class LocalidadServiceImpl  extends  BaseServiceImpl<Localidad, Long> implements LocalidadService {
     @Autowired
     private LocalidadRepository localidadRepositoryRepository;
-    public  LocalidadServiceImpl(BaseRepository<Localidad, Long> baseRepository, LocalidadRepository localidadRepository ) {
-        super((baseRepository));
-        this.localidadRepositoryRepository= localidadRepository;
+    public  LocalidadServiceImpl(BaseRepository<Localidad, Long> baseRepository, LocalidadRepository localidadRepository ) {super((baseRepository));}
+
     }
 
-}

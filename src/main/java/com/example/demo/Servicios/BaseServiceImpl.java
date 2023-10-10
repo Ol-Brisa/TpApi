@@ -1,8 +1,10 @@
 package com.example.demo.Servicios;
+
 import com.example.demo.Entidades.Base;
 import com.example.demo.Repositorios.BaseRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.io.Serializable;
 import java.util.List;
@@ -25,7 +27,16 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
             throw new Exception(e.getMessage());
         }
     }
-
+    @Override
+    @Transactional
+    public Page<E> findALL(Pageable pegeable) throws Exception{
+        try {
+            Page<E> entities = baseRepository.findAll(pegeable);
+            return entities;
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
     @Override
     @Transactional
     public E findById(ID id) throws Exception {
@@ -52,10 +63,16 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
     @Transactional
     public E update(ID id, E entity) throws Exception {
         try{
-            Optional<E> entityOptional = baseRepository.findById(id);
-            E entityUpdate = entityOptional.get();
-            entityUpdate = baseRepository.save(entity);
-            return entityUpdate;
+            Optional<E> opt = baseRepository.findById(id);
+            if (opt.isEmpty()) {
+                throw new Exception();
+            }
+            E oldValue = opt.get();
+            entity.setId(oldValue.getId());
+
+            E saved = baseRepository.save(entity);
+
+            return saved;
         } catch (Exception e){
             throw new Exception(e.getMessage());
         }

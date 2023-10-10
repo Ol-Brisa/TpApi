@@ -1,21 +1,23 @@
 package com.example.demo.Entidades;
 
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-@EqualsAndHashCode(callSuper = true)
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 @Entity
-@Data
+@Table(name = "domicilio")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Table(name = "domicilio")
-public class Domicilio extends Base{
+
+public class Domicilio extends Base {
+    @Column(name = "calle")
     private String calle;
+    @Column(name = "numero" )
     private int numero;
-
-
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "fk_localidad")
+    private Localidad localidad;
 }

@@ -1,35 +1,19 @@
 package com.example.demo.Entidades;
 
-import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-@EqualsAndHashCode(callSuper = true)
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 @Entity
-@Data
+@Table(name = "localidad")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Table(name = "localidad")
-public class Localidad extends Base{
+public class Localidad extends Base {
+    @Column(name = "denominacion")
     private String denominacion;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name="localidad_id")
-    @Builder.Default
-    private List<Domicilio> domicilios = new ArrayList<>();
-    public void agregarDomicilios(Domicilio domi){
-        domicilios.add(domi);
-    }
-    public void mostrarDomicilios() {
-        System.out.println("Domicilios de " + denominacion + ":");
-        for (Domicilio domicilio : domicilios) {
-            System.out.println("Calle: " + domicilio.getCalle());
-            System.out.println("Número: " + domicilio.getNumero());
-        }
-
-    }
-
 }

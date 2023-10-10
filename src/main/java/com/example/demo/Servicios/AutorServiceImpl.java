@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 public class AutorServiceImpl extends BaseServiceImpl<Autor, Long> implements AutorService {
 
         @Autowired
-        private AutorRepository autorRepositoryRepository;
-        public  AutorServiceImpl(BaseRepository<Autor, Long> baseRepository, AutorRepository autorRepository ) {
-            super((baseRepository));
-            this.autorRepositoryRepository = autorRepository;
+        private AutorRepository autorRepository;
+        public  AutorServiceImpl(BaseRepository<Autor, Long> baseRepository) {super((baseRepository));}
+
         }
-}

@@ -1,24 +1,29 @@
 package com.example.demo.Entidades;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.mapping.Set;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.HashSet;
+import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
-@Data
+@Table(name = "libro")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Table(name = "libro")
-public class Libro extends Base{
+
+public class Libro  extends Base{
+    @Column(name = "titulo")
     private String titulo;
+    @Column(name = "fecha")
     private int fecha;
+    @Column(name = "genero")
     private String genero;
+    @Column(name = "paginas")
     private int paginas;
-    private String autor;
-
-
+    @ManyToMany(cascade = CascadeType.REFRESH)
+    private List<Autor> autores;
 }
